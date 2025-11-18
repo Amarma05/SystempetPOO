@@ -1,0 +1,64 @@
+[
+    {
+        "nombre": "jose",
+        "fecha_de_nacimiento": "03042000",
+        "dni": "9876543",
+        "email": "jose@gmail.com",
+        "telefono": "12345678",
+        "mascotas": [
+            {
+                "nombre": "coqui",
+                "fecha_nac": "03042000",
+                "raza": "poodle",
+                "sexo": "hembra",
+                "peso": "5",
+                "vacunas": "antirrabica",
+                "turnos": []
+            },
+            {
+                "nombre": "coqui",
+                "fecha_nac": "02032000",
+                "raza": "poodle",
+                "sexo": "hembra",
+                "peso": "5",
+                "vacunas": "antirrabica",
+                "turnos": []
+            },
+            {
+                "nombre": "coqui",
+                "fecha_nac": "09022000",
+                "raza": "poodle",
+                "sexo": "hembra",
+                "peso": "5",
+                "vacunas": "antirrabica",
+                "turnos": []
+            },
+            {
+                "nombre": "coqui",
+                "fecha_nac": "06012000",
+                "raza": "poodle",
+                "sexo": "hembra",
+                "peso": "5",
+                "vacunas": "antirrabica",
+                "turnos": []
+            },
+            {
+                "nombre": "coqui",
+                "fecha_nac": "03042000",
+                "raza": "podle",
+                "sexo": "hembra",
+                "peso": "5",
+                "vacunas": "antirrabica",
+                "turnos": []
+            }
+        ]
+    },
+    {
+        "nombre": "maria",
+        "fecha_de_nacimiento": "03022000",
+        "dni": "12345678",
+        "email": "maria@gmail.com",
+        "telefono": "123456789",
+        "mascotas": []
+    }
+]
