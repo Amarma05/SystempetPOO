@@ -245,7 +245,7 @@ def ver_mis_mascotas(usuario, lista_usuarios):
     # ----- FRAME IZQUIERDO: TÍTULO + LISTA CON SCROLL + CERRAR -----
     # -----------------------------------------------------------------
     frame_scroll_contenedor = tk.Frame(main_pet_frame, bg="#507383")
-    frame_scroll_contenedor.pack(side="left", fill="both", expand=True, padx=15, pady=15)
+    frame_scroll_contenedor.pack(side="left", fill="both",  padx=15, pady=15)
     
     # 📌 TÍTULO (Ahora en el lado IZQUIERDO)
     tk.Label(
@@ -260,8 +260,8 @@ def ver_mis_mascotas(usuario, lista_usuarios):
         tk.Label(
             frame_scroll_contenedor,
             text="No hay mascotas registradas 😿",
-            font=("Arial", 13, "italic"),
-            bg="#B3E5FC"
+            font=("Arial", 13, "italic","bold"),
+            bg="#D6DBDB"
         ).pack(pady=20)
         
         # BOTÓN CERRAR (Se mantiene en este frame)
@@ -353,9 +353,9 @@ def ver_mis_mascotas(usuario, lista_usuarios):
             ventana_edit = tk.Toplevel()
             ventana_edit.title(f"Editar {m.nombre}")
             ventana_edit.geometry("350x400")
-            ventana_edit.config(bg="#E3F2FD")
+            ventana_edit.config(bg="#D6DBDB")
             
-            tk.Label(ventana_edit, text="Editar Mascota", bg="#E3F2FD",
+            tk.Label(ventana_edit, text="Editar Mascota", bg="#D6DBDB",
                      font=("Arial", 14, "bold")).pack(pady=10)
 
             campos = {}
@@ -388,10 +388,12 @@ def ver_mis_mascotas(usuario, lista_usuarios):
                 ventana_edit.destroy()
 
             tk.Button(ventana_edit, text="Guardar Cambios",
-                      bg="#C5E1A5", command=guardar_cambios).pack(pady=10)
+                      bg="#D6DBDB", fg="black",
+            font=("Aptos", 11, "bold"), relief="raised", command=guardar_cambios).pack(pady=10)
 
             tk.Button(ventana_edit, text="Cancelar",
-                      bg="#EF9A9A", command=ventana_edit.destroy).pack()
+                      bg="#D6DBDB", fg="black",
+            font=("Aptos", 11, "bold"), relief="raised", command=ventana_edit.destroy).pack()
 
         # ----------------------------------------------------------------------
 
@@ -414,12 +416,12 @@ def ver_mis_mascotas(usuario, lista_usuarios):
         botones_frame = tk.Frame(frame_mascota, bg=bg_color)
         botones_frame.grid(row=6, column=0, columnspan=2, pady=10)
 
-        tk.Button(botones_frame, text="✏ Editar",font=("arial",11,"bold"),
-                  bg="#FFF59D", width=10,
+        tk.Button(botones_frame, text="✏ Editar",font=("aptos",11,"bold"),
+                  bg="#D6DBDB", width=10,
                   command=editar_mascota_actual).pack(side="left", padx=5)
 
-        tk.Button(botones_frame, text="🗑 Eliminar",
-                  bg="#C4B5B5", width=10,
+        tk.Button(botones_frame, text="🗑 Eliminar",font=("aptos",11,"bold"),
+                  bg="#D6DBDB", width=10,
                   command=eliminar_mascota_actual).pack(side="left", padx=5)
 
     # 📌 BOTÓN CERRAR (FUERA DEL CANVAS, ABAJO DE LA LISTA)
@@ -427,7 +429,7 @@ def ver_mis_mascotas(usuario, lista_usuarios):
     tk.Button(
         frame_scroll_contenedor,
         text="Cerrar",
-        bg="#C8F0F5",
+        bg="#D6DBDB",
         font=("Arial", 11, "bold"),
         command=ventana_lista.destroy
     ).pack(pady=10)
@@ -435,7 +437,7 @@ def ver_mis_mascotas(usuario, lista_usuarios):
     # -----------------------------------------------------------------
     # ----- FRAME DERECHO: IMAGEN ESTÁTICA -----
     # -----------------------------------------------------------------
-    frame_imagen_mascotas = tk.Frame(main_pet_frame, bg="#507383", width=300) 
+    frame_imagen_mascotas = tk.Frame(main_pet_frame, bg="#507383", width=500) 
     frame_imagen_mascotas.pack(side="right", fill="both", padx=15, pady=15)
     frame_imagen_mascotas.pack_propagate(False)
 
@@ -445,7 +447,7 @@ def ver_mis_mascotas(usuario, lista_usuarios):
     try:
         from PIL import Image, ImageTk
         img_pil = Image.open(ruta_imagen).convert("RGBA")
-        img_pil.thumbnail((250, 250), Image.LANCZOS)
+        img_pil.thumbnail((350, 350), Image.LANCZOS)
         logo_tk = ImageTk.PhotoImage(img_pil)
 
         lbl_imagen = tk.Label(frame_imagen_mascotas, image=logo_tk, bg="#507383")
@@ -464,29 +466,37 @@ def ventana_registrar_mascota(usuario, lista_usuarios):
     ventana_mascota = tk.Toplevel()
     ventana_mascota.title("Registrar Mascota 🐾")
     ventana_mascota.geometry("400x400")
-    ventana_mascota.config(bg="#B3E5FC")
+    ventana_mascota.config(bg="#507383")
 
-    tk.Label(ventana_mascota, text="Nombre:", bg="#B3E5FC").pack(pady=3)
+    lbl_nueva_mascota = tk.Label(
+        ventana_mascota, # Empaquetado en el frame izquierdo
+        text=f"Registre su mascota 🐶",
+        font=("cambria", 25, "bold"),
+        bg="#507383",
+        )
+    lbl_nueva_mascota.pack(pady=15)
+
+    tk.Label(ventana_mascota, text="Nombre:", bg="#507383",font=("aptos",14),fg="white").pack(pady=3)
     entry_nombre = tk.Entry(ventana_mascota)
     entry_nombre.pack()
 
-    tk.Label(ventana_mascota, text="Fecha de Nacimiento (DD/MM/AAAA):", bg="#B3E5FC").pack(pady=3)
+    tk.Label(ventana_mascota, text="Fecha de Nacimiento (DD/MM/AAAA):", bg="#507383",font=("aptos",14),fg="white").pack(pady=3)
     entry_fecha = tk.Entry(ventana_mascota)
     entry_fecha.pack()
 
-    tk.Label(ventana_mascota, text="Raza:", bg="#B3E5FC").pack(pady=3)
+    tk.Label(ventana_mascota, text="Raza:", bg="#507383",font=("aptos",14),fg="white").pack(pady=3)
     entry_raza = tk.Entry(ventana_mascota)
     entry_raza.pack()
 
-    tk.Label(ventana_mascota, text="Sexo:", bg="#B3E5FC").pack(pady=3)
+    tk.Label(ventana_mascota, text="Sexo:", bg="#507383",font=("aptos",14),fg="white").pack(pady=3)
     entry_sexo = tk.Entry(ventana_mascota)
     entry_sexo.pack()
 
-    tk.Label(ventana_mascota, text="Peso (kg):", bg="#B3E5FC").pack(pady=3)
+    tk.Label(ventana_mascota, text="Peso (kg):", bg="#507383",font=("aptos",14),fg="white").pack(pady=3)
     entry_peso = tk.Entry(ventana_mascota)
     entry_peso.pack()
 
-    tk.Label(ventana_mascota, text="Vacunas (separadas por coma):", bg="#B3E5FC").pack(pady=3)
+    tk.Label(ventana_mascota, text="Vacunas (separadas por coma):", bg="#507383",font=("aptos",14),fg="white").pack(pady=3)
     entry_vacunas = tk.Entry(ventana_mascota)
     entry_vacunas.pack()
 
@@ -517,12 +527,12 @@ def ventana_registrar_mascota(usuario, lista_usuarios):
 
     tk.Button(
         ventana_mascota, text="Guardar Mascota",
-        bg="#C5E1A5", font=("Arial", 11, "bold"),
+        bg="#D6DBDB", font=("Aptos", 11, "bold"), relief="raised",
         command=guardar_mascota
     ).pack(pady=15)
 
     tk.Button(
         ventana_mascota, text="Cancelar",
-        bg="#EF9A9A", font=("Arial", 11, "bold"),
+        bg="#D6DBDB", font=("Aptos", 11, "bold"), relief="raised",
         command=ventana_mascota.destroy
     ).pack(pady=5)
