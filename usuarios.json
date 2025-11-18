@@ -50,5 +50,13 @@
                 "turnos": []
             }
         ]
+    },
+    {
+        "nombre": "angelica martinez",
+        "fecha_de_nacimiento": "05061993",
+        "dni": "958816",
+        "email": "macua@gmial.com",
+        "telefono": "112233445",
+        "mascotas": []
     }
 ]

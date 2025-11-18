@@ -4,6 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
+from datetime import datetime
 
 from controllers.guardar_cargar import guardar_datos, cargar_datos
 from models.usuario import Usuario
@@ -33,7 +34,7 @@ def iniciar_login():  # 👈 Esta función es llamada desde main.py
         ventana.config(bg="#507383")
 
         frame_ventana_usuario = tk.Frame(ventana, bg="#507383", width=500) 
-        frame_ventana_usuario.pack(side="left", fill="both", padx=15, pady=15)
+        frame_ventana_usuario.pack(fill="both", padx=15, pady=15)
 
         lbl_nuevo_usuario = tk.Label(
         frame_ventana_usuario, # Empaquetado en el frame izquierdo
@@ -43,23 +44,23 @@ def iniciar_login():  # 👈 Esta función es llamada desde main.py
         )
         lbl_nuevo_usuario.pack(pady=15)
 
-        tk.Label(frame_ventana_usuario, text="Nombre completo:", bg="#507383").pack(pady=5)
+        tk.Label(frame_ventana_usuario, text="Nombre completo:", bg="#507383",font=("aptos",14),fg="white").pack(pady=5)
         entry_nombre = tk.Entry(frame_ventana_usuario)
         entry_nombre.pack()
 
-        tk.Label(frame_ventana_usuario, text="Fecha de nacimiento (DD/MM/AAAA):", bg="#507383").pack(pady=5)
+        tk.Label(frame_ventana_usuario, text="Fecha de nacimiento (DD/MM/AAAA):", bg="#507383",font=("aptos",14),fg="white").pack(pady=5)
         entry_fecha = tk.Entry(frame_ventana_usuario)
         entry_fecha.pack()
 
-        tk.Label(frame_ventana_usuario, text="DNI:", bg="#507383").pack(pady=5)
+        tk.Label(frame_ventana_usuario, text="DNI:", bg="#507383",font=("aptos",14),fg="white").pack(pady=5)
         entry_dni_nuevo = tk.Entry(frame_ventana_usuario)
         entry_dni_nuevo.pack()
 
-        tk.Label(frame_ventana_usuario, text="Email:", bg="#507383").pack(pady=5)
+        tk.Label(frame_ventana_usuario, text="Email:", bg="#507383",font=("aptos",14),fg="white").pack(pady=5)
         entry_email = tk.Entry(frame_ventana_usuario)
         entry_email.pack()
 
-        tk.Label(frame_ventana_usuario, text="Teléfono:", bg="#507383").pack(pady=5)
+        tk.Label(frame_ventana_usuario, text="Teléfono:", bg="#507383",font=("aptos",14),fg="white").pack(pady=5)
         entry_tel = tk.Entry(frame_ventana_usuario)
         entry_tel.pack()
 
@@ -86,10 +87,10 @@ def iniciar_login():  # 👈 Esta función es llamada desde main.py
             ventana.destroy()
 
         tk.Button(
-            frame_ventana_usuario, text="Guardar usuario", bg="#B3E5FC", fg="grey",
+            frame_ventana_usuario, text="Guardar usuario", bg="#D6DBDB", fg="black",
             font=("Aptos", 11, "bold"), relief="raised",
             command=guardar_usuario
-        ).pack(pady=20)
+        ).pack(pady=5)
 
     # --- Ventana principal de login ---
     root = tk.Tk()

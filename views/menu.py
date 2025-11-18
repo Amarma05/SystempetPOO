@@ -159,7 +159,7 @@ def abrir_menu(usuario, lista_usuarios):
     
     # --- CÓDIGO DE DIBUJO DE LOS TURNOS (CORREGIDO EL SYNTAX ERROR y el slice) ---
     if turnos_ordenados:
-        for i, item in enumerate(turnos_ordenados[:1]): # Muestra le primer turno
+        for i, item in enumerate(turnos_ordenados[:2]): # Muestra le primer turno
             fecha_formateada = item["fecha_hora"].strftime("%a, %d %b | %H:%M hs")
             info_turno = ( 
                 f"🐾 {item['mascota']}\n"
@@ -272,7 +272,7 @@ def ver_mis_mascotas(usuario, lista_usuarios):
             font=("Arial", 11, "bold"),
 
             command=ventana_lista.destroy
-        ).pack(side="bottom", pady=20, fill="x", padx=30)
+        ).pack(side="bottom", pady=5, fill="x", padx=5)
         return
 
     """# CANVAS + SCROLLBAR (VERTICAL)
