@@ -7,5 +7,5 @@ sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 from views.login import iniciar_login
 
 
-if __name__ == "__main__":
-    iniciar_login()  # 🚀 Inicia la aplicación
+if __name__=="__main__":
+    iniciar_login()

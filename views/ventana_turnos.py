@@ -1,8 +1,13 @@
+import sys,os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import tkinter as tk
 from tkinter import messagebox, ttk
 from models.turno import Turno
 from controllers.guardar_cargar import guardar_datos
 from models.moduloIA import Prediccion_turnos, PROFESIONALES
+from PIL import Image, ImageTk, ImageOps
+
 
 # Función principal para la ventana de turnos
 def ventana_sacar_turno(usuario, lista_usuarios):
@@ -13,14 +18,22 @@ def ventana_sacar_turno(usuario, lista_usuarios):
     ventana_turno = tk.Toplevel()
     ventana_turno.title("📅 Sacar Turno Veterinario")
     ventana_turno.geometry("400x500")
-    ventana_turno.config(bg="#B3E5FC")
+    ventana_turno.config(bg="#507383")
+
+    lbl_cree_turno = tk.Label(
+        ventana_turno, # Empaquetado en el frame izquierdo
+        text=f"Agende un turno 🐶",
+        font=("cambria", 25, "bold"),
+        bg="#507383",
+        )
+    lbl_cree_turno.pack(pady=15)
 
     # --- Frame principal ---
-    frame = tk.Frame(ventana_turno, bg="#B3E5FC", padx=20, pady=20)
+    frame = tk.Frame(ventana_turno, bg="#507383", padx=15, pady=15)
     frame.pack(expand=True)
 
     # 1. Selección de Mascota
-    tk.Label(frame, text="1. Selecciona tu Mascota:", bg="#B3E5FC", font=("Arial", 11, "bold")).pack(pady=(0, 5))
+    tk.Label(frame, text="1. Selecciona tu Mascota:", bg="#507383",font=("aptos",14),fg="white").pack(pady=(0, 5))
     
     # Crea una lista de nombres de mascotas para el Combobox
     nombres_mascotas = [m.nombre for m in usuario.mascotas]
@@ -30,23 +43,24 @@ def ventana_sacar_turno(usuario, lista_usuarios):
     combo_mascotas.pack(pady=5)
     
     # 2. Fecha y Hora (Aquí usarás DatePicker si lo instalas, por ahora solo Entry)
-    tk.Label(frame, text="2. Fecha del Turno (DD/MM/AAAA):", bg="#B3E5FC").pack(pady=(15, 5))
+    tk.Label(frame, text="2. Fecha del Turno (DD/MM/AAAA):", bg="#507383",font=("aptos",14),fg="white").pack(pady=(10, 5))
     entry_fecha = tk.Entry(frame, width=30)
     entry_fecha.pack(pady=5)
 
-    tk.Label(frame, text="3. Hora del Turno (HH:MM):", bg="#B3E5FC").pack(pady=(15, 5))
+    tk.Label(frame, text="3. Hora del Turno (HH:MM):", bg="#507383",font=("aptos",14),fg="white").pack(pady=(10, 5))
     entry_hora = tk.Entry(frame, width=30)
     entry_hora.pack(pady=5)
     
     # 3. Motivo de la Consulta
-    tk.Label(frame, text="4. Motivo de la Consulta:", bg="#B3E5FC").pack(pady=(15, 5))
+    tk.Label(frame, text="4. Motivo de la Consulta:", bg="#507383",font=("aptos",14),fg="white").pack(pady=(10, 5))
     entry_motivo = tk.Entry(frame, width=30)
     entry_motivo.pack(pady=5)
     
     # 4. Veterinario (Opcional)
-    tk.Label(frame, text="5. Veterinario (Opcional - Escriba el nombre):", bg="#B3E5FC").pack(pady=(15, 5))
+    tk.Label(frame, text="5. Veterinario (Opcional - Escriba el nombre):", bg="#507383",font=("aptos",14),fg="white").pack(pady=(10, 5))
     entry_veterinario = tk.Entry(frame, width=30)
     entry_veterinario.pack(pady=5)
+
 
     # --- Función para guardar el turno ---
     def guardar_turno():
@@ -81,11 +95,49 @@ def ventana_sacar_turno(usuario, lista_usuarios):
     # Botón de Guardar
     tk.Button(
         frame, text="Agendar Turno",
-        bg="#FFC107", font=("Arial", 12, "bold"),
+        bg="#D6DBDB", font=("Aptos", 11, "bold"),
         command=guardar_turno
     ).pack(pady=20)
 
-def ventana_asistente_ia(usuario, lista_usuarios):
+    # 1. Definir la ruta de la imagen
+    ruta_imagenturno = os.path.join(os.path.dirname(__file__), "imagen","image4.png")
+
+    frame_image_izquierdo = tk.Frame(frame, bg="#507383")
+    # side="left" lo coloca a la izquierda; anchor="nw" lo alinea arriba y a la izquierda
+    frame_image_izquierdo.pack(side="right", anchor="se", padx=(10, 40))
+    # Usaremos un bloque try/except por si el archivo de imagen no se encuentra
+    try:
+        # 2. Cargar la imagen usando PIL y redimensionar
+        img_pil = Image.open(ruta_imagenturno).convert("RGBA")
+        
+        # Redimensiona la imagen a un tamaño adecuado para el espacio. 
+       
+        img_pil = img_pil.resize((250, 200), Image.LANCZOS)
+        
+        # 3. Convertir a PhotoImage para Tkinter
+        logo_tk = ImageTk.PhotoImage(img_pil)
+        
+        # 4. Crear la etiqueta y mostrar la imagen
+        lbl_imagen = tk.Label(frame, image=logo_tk, bg="#507383")
+        
+        # OBLIGATORIO: Guardar una referencia a la imagen para que Tkinter no la borre
+        lbl_imagen.image = logo_tk
+        
+        lbl_imagen.pack(side="bottom",pady=20, padx=10, fill="both", expand=True)
+
+    except FileNotFoundError:
+        # Mensaje de respaldo si la imagen no se encuentra
+        tk.Label(
+            frame, 
+            text="[Error: Imagen 'image1.png' no encontrada]", 
+            font=("Arial", 10, "italic"), 
+            bg="#507383", 
+            height=10
+        ).pack(pady=20, padx=10, fill="both", expand=True)
+    
+    ventana_turno.mainloop()
+
+def ventana_asistente_IA(usuario, lista_usuarios):
     if not usuario.mascotas:
         messagebox.showwarning("Advertencia", "Necesitas registrar una mascota antes de usar el Asistente IA.")
         return
@@ -93,45 +145,45 @@ def ventana_asistente_ia(usuario, lista_usuarios):
     ventana_ia = tk.Toplevel()
     ventana_ia.title("🤖 Asistente IA Petly")
     ventana_ia.geometry("450x550")
-    ventana_ia.config(bg="#E1BEE7")
+    ventana_ia.config(bg="#507383")
 
     # --- Variables de control ---
     turno_recomendado = None
     
     # --- Frame Principal ---
-    frame = tk.Frame(ventana_ia, bg="#E1BEE7", padx=20, pady=20)
+    frame = tk.Frame(ventana_ia, bg="#507383", padx=20, pady=20)
     frame.pack(expand=True)
 
-    tk.Label(frame, text="Hola, soy Petly, tu Asistente IA 🤖", bg="#E1BEE7", font=("Arial", 13, "bold")).pack(pady=10)
-    tk.Label(frame, text="Especifica tus preferencias de turno:", bg="#E1BEE7").pack(pady=5)
+    tk.Label(frame, text="Hola, soy Petly, tu Asistente IA 🤖", bg="#507383", font=("cambria", 15, "bold")).pack(pady=10)
+    tk.Label(frame, text="Especifica tus preferencias de turno:", bg="#507383", font=("cambria", 14, "italic")).pack(pady=5)
     
     # --- 1. Selección de Mascota ---
-    tk.Label(frame, text="Mascota:", bg="#E1BEE7").pack(pady=(10, 0))
+    tk.Label(frame, text="Mascota:", bg="#507383", font=("cambria", 12, "italic")).pack(pady=(10, 0))
     nombres_mascotas = [m.nombre for m in usuario.mascotas]
     combo_mascotas = ttk.Combobox(frame, values=nombres_mascotas, state="readonly", width=30)
     combo_mascotas.set(nombres_mascotas[0])
     combo_mascotas.pack(pady=5)
 
     # --- 2. Preferencia de Horario (Mañana/Tarde) ---
-    tk.Label(frame, text="Rango Horario de Preferencia:", bg="#E1BEE7").pack(pady=(10, 0))
+    tk.Label(frame, text="Rango Horario de Preferencia:", bg="#507383", font=("cambria", 12, "italic")).pack(pady=(10, 0))
     combo_horario = ttk.Combobox(frame, values=["mañana", "tarde-noche", "sin preferencia"], state="readonly", width=30)
     combo_horario.set("sin preferencia")
     combo_horario.pack(pady=5)
 
     # --- 3. Preferencia de Profesional ---
-    tk.Label(frame, text="Profesional (Opcional):", bg="#E1BEE7").pack(pady=(10, 0))
+    tk.Label(frame, text="Profesional (Opcional):", bg="#507383", font=("cambria", 12, "italic")).pack(pady=(10, 0))
     profesionales_lista = PROFESIONALES + ["sin preferencia"]
     combo_profesional = ttk.Combobox(frame, values=profesionales_lista, width=30)
     combo_profesional.set("sin preferencia")
     combo_profesional.pack(pady=5)
 
     # --- Área de Recomendación ---
-    tk.Label(frame, text="Encontré esto para ti:", bg="#E1BEE7", font=("Arial", 12, "italic")).pack(pady=(20, 5))
+    tk.Label(frame, text="Encontré esto para ti:", bg="#507383", font=("cambria", 12, "italic")).pack(pady=(20, 5))
     lbl_recomendacion = tk.Label(frame, text="Pulsa Buscar para ver la recomendación...", bg="#F3E5F5", wraplength=350, justify="left", bd=2, relief="groove")
     lbl_recomendacion.pack(fill="x", pady=10, ipady=10)
     
     # Botónes de Guardar y Buscar
-    btn_guardar = tk.Button(frame, text="Guardar Turno Recomendado", bg="#C5E1A5", font=("Arial", 11, "bold"), state="disabled")
+    btn_guardar = tk.Button(frame, text="Guardar Turno Recomendado", bg="#D6DBDB", font=("Arial", 11, "bold"), state="disabled")
     btn_guardar.pack(pady=(20, 5))
     
     # --- Lógica de Búsqueda y Guardado ---
@@ -181,8 +233,8 @@ def ventana_asistente_ia(usuario, lista_usuarios):
     # Botón de Búsqueda
     tk.Button(
         frame, text="Buscar Disponibilidad",
-        bg="#FFB74D", font=("Arial", 11, "bold"),
+        bg="#D6DBDB", font=("Aptos", 11, "bold"),
         command=buscar_recomendacion
     ).pack(pady=5)
     
-    tk.Button(frame, text="Cancelar", bg="#EF9A9A", command=ventana_ia.destroy).pack(pady=5)
+    tk.Button(frame, text="Cancelar", bg="#D6DBDB", command=ventana_ia.destroy).pack(pady=5)

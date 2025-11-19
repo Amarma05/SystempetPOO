@@ -11,7 +11,7 @@ from models.usuario import Usuario
 from models.mascota import Mascota
 from controllers.guardar_cargar import guardar_datos
 # Asegúrate de que las rutas y nombres de archivo sean correctos
-from views.ventana_turnos import ventana_sacar_turno, ventana_asistente_ia 
+from views.ventana_turnos import ventana_sacar_turno, ventana_asistente_IA 
 from utils.turno_utilis import obtener_y_ordenar_turnos 
 from views.ventana_asistente_ia import ventana_asistente_ia
 
@@ -31,7 +31,7 @@ def crear_menu_turnos(parent_widget, usuario, lista_usuarios):
     # Opción 2: Asistente IA
     menu.add_command(
         label="🤖 Asistente IA",
-        command=lambda: ventana_asistente_ia(usuario, lista_usuarios)
+        command=lambda: ventana_asistente_IA(usuario, lista_usuarios)
     )
     
     return menu
@@ -468,6 +468,8 @@ def ventana_registrar_mascota(usuario, lista_usuarios):
     ventana_mascota.geometry("400x400")
     ventana_mascota.config(bg="#507383")
 
+
+
     lbl_nueva_mascota = tk.Label(
         ventana_mascota, # Empaquetado en el frame izquierdo
         text=f"Registre su mascota 🐶",
@@ -499,6 +501,26 @@ def ventana_registrar_mascota(usuario, lista_usuarios):
     tk.Label(ventana_mascota, text="Vacunas (separadas por coma):", bg="#507383",font=("aptos",14),fg="white").pack(pady=3)
     entry_vacunas = tk.Entry(ventana_mascota)
     entry_vacunas.pack()
+
+     # IMAGEN (Lógica de carga de imagen, se mantiene)
+    ruta_imagen = os.path.join(os.path.dirname(__file__), "imagen", "image6.png")
+
+    try:
+        from PIL import Image, ImageTk
+        img_pil = Image.open(ruta_imagen).convert("RGBA")
+        img_pil.thumbnail((350, 350), Image.LANCZOS)
+        logo_tk = ImageTk.PhotoImage(img_pil)
+
+        lbl_imagen = tk.Label(ventana_mascota, image=logo_tk, bg="#507383")
+        lbl_imagen.image = logo_tk
+        lbl_imagen.pack(expand=True, padx=10, pady=10)
+    except Exception:
+        tk.Label(
+            ventana_mascota,
+            text="[Imagen no disponible]",
+            bg="#D4E6F1",
+            font=("Arial", 10, "italic")
+        ).pack(expand=True, padx=10, pady=10)
 
     def guardar_mascota():
         nombre = entry_nombre.get().strip()

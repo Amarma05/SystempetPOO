@@ -1,10 +1,14 @@
+import os,sys
+import re
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 import tkinter as tk
 from tkinter import messagebox
 import joblib
-import os
-import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
+from PIL import Image, ImageTk, ImageOps
 # Asegúrate de tener estas funciones disponibles o importadas si están en otro archivo
 # from tu_archivo_utilidades import limpiar_texto 
 
@@ -52,7 +56,7 @@ def ventana_asistente_ia(usuario, lista_usuarios):
     ventana = tk.Toplevel()
     ventana.title("🤖 Asistente IA de Diagnóstico")
     ventana.geometry("600x500")
-    ventana.config(bg="#E1F5FE")
+    ventana.config(bg="#507383")
     
     # ---------------------------------------------
     # 1. CARGA DEL MODELO (Solo una vez)
@@ -134,14 +138,51 @@ def ventana_asistente_ia(usuario, lista_usuarios):
     # ---------------------------------------------
     # 3. INTERFAZ GRÁFICA (Widgets)
     # ---------------------------------------------
+# 1. Definir la ruta de la imagen
+    ruta_imagenia = os.path.join(os.path.dirname(__file__), "imagen","image5.png")
+
+    frame_image_izquierdo = tk.Frame(ventana, bg="#507383")
+    # side="left" lo coloca a la izquierda; anchor="nw" lo alinea arriba y a la izquierda
+    frame_image_izquierdo.pack(side="right", anchor="se", padx=(10, 40))
+    # Usaremos un bloque try/except por si el archivo de imagen no se encuentra
+    try:
+        # 2. Cargar la imagen usando PIL y redimensionar
+        img_pil = Image.open(ruta_imagenia).convert("RGBA")
+        
+        # Redimensiona la imagen a un tamaño adecuado para el espacio. 
+       
+        img_pil = img_pil.resize((250, 250), Image.LANCZOS)
+        
+        # 3. Convertir a PhotoImage para Tkinter
+        logo_tk = ImageTk.PhotoImage(img_pil)
+        
+        # 4. Crear la etiqueta y mostrar la imagen
+        lbl_imagen = tk.Label(ventana, image=logo_tk, bg="#507383")
+        
+        # OBLIGATORIO: Guardar una referencia a la imagen para que Tkinter no la borre
+        lbl_imagen.image = logo_tk
+        
+        lbl_imagen.pack(side="bottom",pady=20, padx=10, fill="both", expand=True)
+
+    except FileNotFoundError:
+        # Mensaje de respaldo si la imagen no se encuentra
+        tk.Label(
+            ventana, 
+            text="[Error: Imagen 'image1.png' no encontrada]", 
+            font=("Arial", 10, "italic"), 
+            bg="#507383", 
+            height=10
+        ).pack(pady=20, padx=10, fill="both", expand=True)
+    
+    
 
     # Título
     tk.Label(ventana, text="Asistente de Diagnóstico de Síntomas PETLY", 
-             font=("cambria", 18, "bold"), bg="#B3E5FC", fg="#000000").pack(pady=15)
+             font=("cambria", 18, "bold"), bg="#507383", fg="#000000").pack(pady=15)
 
     # Instrucciones
     tk.Label(ventana, text="Ingresa los síntomas de tu mascota (ej: 'diarrea, vómitos, letargo'):", 
-             font=("cambria", 14), bg="#B3E5FC").pack(pady=(0, 5))
+             font=("cambria", 14), bg="#507383").pack(pady=(0, 5))
 
     # Caja de texto para la consulta (Usamos Text para multi-línea)
     entry_consulta = tk.Text(ventana, height=5, width=60, font=("Arial", 11), bd=2, relief="sunken")
@@ -150,7 +191,7 @@ def ventana_asistente_ia(usuario, lista_usuarios):
     # Botón de Consulta
     tk.Button(ventana, text="Analizar Síntomas 🧠", 
               command=obtener_respuesta_ia, 
-              font=("cambria", 14, "bold"), bg="#4C7AAF", fg="black", 
+              font=("cambria", 14, "bold"), bg="#BDBDBD", fg="black", 
               width=20).pack(pady=10)
 
     # Separador
@@ -158,10 +199,10 @@ def ventana_asistente_ia(usuario, lista_usuarios):
 
     # Área de Resultado
     tk.Label(ventana, text="Esperando consulta...", 
-             font=("cambria", 14), bg="#B3E5FC", anchor="w", justify=tk.LEFT).pack(pady=(5, 0))
+             font=("cambria", 14), bg="#507383", anchor="w", justify=tk.LEFT).pack(pady=(5, 0))
 
     lbl_resultado = tk.Label(ventana, text="", 
-                             font=("Arial", 12), bg="#B3E5FC", height=8, width=60,
+                             font=("Arial", 12), bg="#FAFAFA", height=8, width=60,
                              anchor="nw", justify=tk.LEFT, wraplength=550, bd=2, relief="sunken")
     lbl_resultado.pack(pady=10, padx=20)
     
