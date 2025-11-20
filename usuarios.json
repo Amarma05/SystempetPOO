@@ -7,45 +7,33 @@
         "telefono": "123456",
         "mascotas": [
             {
-                "nombre": "coqui",
-                "fecha_nac": "02022010",
-                "raza": "poodle",
-                "sexo": "hembra",
-                "peso": "5",
-                "vacunas": "antirrabica",
-                "turnos": [
-                    {
-                        "fecha": "06032025",
-                        "hora": "13",
-                        "motivo": "general",
-                        "veterinario": "General"
-                    },
-                    {
-                        "fecha": "13/11/2025",
-                        "hora": "09:00",
-                        "motivo": "Consulta General (Recomendaci\u00f3n IA)",
-                        "veterinario": "Dr. Perez Juan"
-                    },
-                    {
-                        "fecha": "16/11/2025",
-                        "hora": "15:30",
-                        "motivo": "Consulta General (Recomendaci\u00f3n IA)",
-                        "veterinario": "Dr. Vallejos Silvia"
-                    },
-                    {
-                        "fecha": "03042025",
-                        "hora": "2030",
-                        "motivo": "vomito",
-                        "veterinario": "General"
-                    }
-                ]
-            },
-            {
                 "nombre": "keysi",
                 "fecha_nac": "04032009",
                 "raza": "doberman",
                 "sexo": "macho",
                 "peso": "15",
+                "vacunas": "antirrabica",
+                "turnos": [
+                    {
+                        "fecha": "05/06/2025",
+                        "hora": "12:30",
+                        "motivo": "general",
+                        "veterinario": "General"
+                    },
+                    {
+                        "fecha": "12/12/2025",
+                        "hora": "12:30",
+                        "motivo": "general",
+                        "veterinario": "General"
+                    }
+                ]
+            },
+            {
+                "nombre": "coqui",
+                "fecha_nac": "05122026",
+                "raza": "labrador",
+                "sexo": "hembra",
+                "peso": "17",
                 "vacunas": "antirrabica",
                 "turnos": []
             }

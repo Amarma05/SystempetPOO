@@ -14,13 +14,13 @@ def obtener_y_ordenar_turnos(usuario):
         for turno in mascota.turnos:
             try:
                 # El formato debe coincidir con el que guardas: DD/MM/AAAA HH:MM
-                fecha_hora_str = f"{turno.fecha} {turno.hora}"
-                fecha_turno = datetime.strptime(fecha_hora_str, "%d/%m/%Y %H:%M")
-                
-                if fecha_turno >= now:
+                #fecha_hora_str = f"{turno.fecha} {turno.hora}"
+                #fecha_turno = datetime.strptime(fecha_hora_str, "%d/%m/%Y %H:%M")
+                fecha_hora_dt = turno.obtener_datetime()
+                if fecha_hora_dt >= now:
                     turnos_actuales.append({
                         "mascota": mascota.nombre,
-                        "fecha_hora": fecha_turno,
+                        "fecha_hora": fecha_hora_dt,
                         "info": turno
                     })
             except ValueError:

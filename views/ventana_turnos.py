@@ -195,7 +195,7 @@ def ventana_asistente_IA(usuario, lista_usuarios):
         pref_prof = combo_profesional.get()
         
         # Llamar al módulo IA
-        turno_recomendado = Prediccion_turnos(pref_hora, pref_prof)
+        turno_recomendado = Prediccion_turnos(pref_hora, pref_prof, preferencia_especialidad=None)
         
         # Mostrar la recomendación
         texto = (

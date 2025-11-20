@@ -42,6 +42,13 @@ def abrir_menu(usuario, lista_usuarios):
     ventana_menu.title(f"🐾 SystemPet | Menú Principal ({usuario.nombre.capitalize()})")
     ventana_menu.geometry("900x800") 
     ventana_menu.config(bg="#507383")
+
+    # Pre-calculamos los turnos y el menú desplegable (siempre va antes de usarse)
+    menu_turnos = crear_menu_turnos(ventana_menu, usuario, lista_usuarios)
+    turnos_ordenados = obtener_y_ordenar_turnos(usuario)
+    
+    # 🚨 LÍNEA DE DEBUGGING AÑADIDA:
+    print(f"DEBUG: Turnos obtenidos para {usuario.nombre}: {turnos_ordenados}")
     
     # Pre-calculamos los turnos y el menú desplegable (siempre va antes de usarse)
     menu_turnos = crear_menu_turnos(ventana_menu, usuario, lista_usuarios)
@@ -156,10 +163,11 @@ def abrir_menu(usuario, lista_usuarios):
     # Contenedor para la lista de turnos
     frame_turnos = tk.Frame(frame_contenido_derecho, bd=2, relief=tk.SUNKEN, bg="white")
     frame_turnos.pack(pady=5, padx=(10, 40), fill="both",anchor="center")
+
     
     # --- CÓDIGO DE DIBUJO DE LOS TURNOS (CORREGIDO EL SYNTAX ERROR y el slice) ---
     if turnos_ordenados:
-        for i, item in enumerate(turnos_ordenados[:2]): # Muestra le primer turno
+        for i, item in enumerate(turnos_ordenados[:1]): # Muestra le primer turno
             fecha_formateada = item["fecha_hora"].strftime("%a, %d %b | %H:%M hs")
             info_turno = ( 
                 f"🐾 {item['mascota']}\n"
@@ -179,8 +187,8 @@ def abrir_menu(usuario, lista_usuarios):
             )
             lbl_turno.pack(fill="x", pady=2)
             
-        if len(turnos_ordenados) > 1:
-             tk.Label(frame_turnos, text=f"...y {len(turnos_ordenados) - 1} turnos más", bg="white", font=("cambria", 9, "italic")).pack(pady=5)
+        if len(turnos_ordenados) > 2:
+             tk.Label(frame_turnos, text=f"...y {len(turnos_ordenados) - 1} turnos más", bg="white").pack(pady=5)
              
     else:
         tk.Label(
